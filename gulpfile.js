@@ -12,7 +12,7 @@ const scriptTask = () => {
   .pipe(minify({
     noSource: true,
   }))
-  .pipe(concat("all.js"))
+  .pipe(concat("scripts.js"))
   .pipe(dest('dist/js/', {sourcemaps: true}));
 
 }
