@@ -12,7 +12,7 @@ const scriptTask = () => {
   .pipe(minify({
     noSource: true,
   }))
-  .pipe(concat("scripts.js"))
+  .pipe(concat("all.js"))
   .pipe(dest('dist/js/', {sourcemaps: true}));
 
 }
@@ -26,21 +26,17 @@ const markupTask = () => {
 
 const styleTask = () => {
   return src('src/*.css', {sourcemaps: true})
-  .pipe(concat('styles.css'))
+  .pipe(concat('style.css'))
   .pipe(cleanCSS({compatibility: 'ie8'}))
   .pipe(dest('dist/', {sourcemaps: true}));
 }
 
-const imageTask = () => {
-  return src('src/images/**/*')
-   .pipe(imagemin())
-   .pipe(dest('dist/images/'))
-}
+
 
 const deployTask = () => {
   return ghpages.publish('dist', function (err) {});
 
 }
 
-exports.tasks = parallel(scriptTask, styleTask, markupTask, imageTask);
-exports.deploy = series(scriptTask, styleTask, markupTask, imageTask, deployTask); 
+exports.tasks = parallel(scriptTask, styleTask, markupTask);
+exports.deploy = series(scriptTask, styleTask, markupTask, deployTask); 
